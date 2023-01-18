@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movieapp/widgets/drawer.dart';
 import 'package:movieapp/widgets/movie_card.dart';
 import 'package:provider/provider.dart';
 import '../providers/movies.dart';
@@ -10,28 +11,23 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     final movies = Provider.of<Movies>(context);
     return Scaffold(
+      drawer: CustomDrawer(),
       appBar: AppBar(
         title: const Text(
           'PemroMovie',
         ),
         backgroundColor: Colors.black,
         centerTitle: true,
+        actions: [
+          InkWell(
+            onTap: () => Navigator.pushNamed(context, '/search'),
+            child: Padding(
+              padding: EdgeInsets.only(right: 20),
+              child: Icon(Icons.search),
+            ),
+          )
+        ],
       ),
-      // body: new Container(
-      //     child: Row(
-      //   children: <Widget>[
-      //     Flexible(
-      //         child: new Text(
-      //       movies.list[4].title,
-      //     ))
-      //   ],
-      // ))
-      // body: MovieCard(
-      //   title: movies.list[4].title,
-      //   imageUrl: movies.list[4].imageUrl,
-      //   rating: movies.list[4].rating,
-      //   year: movies.list[4].year,
-      // )
       body: FutureBuilder(
         future: movies.fetchMovieData(),
         builder: (context, snapshot) =>
@@ -43,6 +39,7 @@ class Home extends StatelessWidget {
                           imageUrl: movies.list[index].imageUrl,
                           rating: movies.list[index].rating,
                           year: movies.list[index].year,
+                          id: movies.list[index].id,
                         ),
                     itemCount: movies.list.length),
       ),

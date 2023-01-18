@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movieapp/screens/movie_details.dart';
 
 class MovieCard extends StatelessWidget {
   const MovieCard(
@@ -7,18 +8,26 @@ class MovieCard extends StatelessWidget {
       required this.rating,
       required this.title,
       required this.year,
-      required this.imageUrl});
+      required this.imageUrl,
+      required this.id});
 
   final String title;
   // final int length;
   final double rating;
   final String year;
+  final int id;
   final String imageUrl;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MovieDetails(title: title, id: id),
+            ));
+      },
       child: Column(
         children: [
           Container(
