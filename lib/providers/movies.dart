@@ -16,10 +16,21 @@ class Movies extends ChangeNotifier {
         "https://api.themoviedb.org/3/discover/movie?api_key=dbcfecebada855447ced97cf5bf08829");
     final data = await http.get(url);
     final List<dynamic> convertedData = json.decode(data.body)['results'];
+    // print(convertedData);
+
+    for (var element in convertedData) {
+      // for (var i in element['genres']) {
+      //   print(i);
+      // }
+      print(element['genre_ids']);
+    }
+
+    print('-----');
     for (var element in convertedData) {
       temporaryList.add(Movie(
           id: element['id'],
           title: element['original_title'],
+          // runtime: element['runtime'],
           rating: element['vote_average'].toDouble(),
           imageUrl: "https://image.tmdb.org/t/p/w500/${element['poster_path']}",
           overview: element['overview'],

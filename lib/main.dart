@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movieapp/providers/movies.dart';
 import 'package:movieapp/screens/home.dart';
 import 'package:provider/provider.dart';
-import 'test.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(
@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        fontFamily: GoogleFonts.poppins().fontFamily,
         primarySwatch: Colors.blue,
       ),
       home: const Home(),

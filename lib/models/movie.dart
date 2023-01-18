@@ -7,11 +7,13 @@ class Movie {
     required this.imageUrl,
     required this.overview,
     required this.year,
+    // required this.runtime,
   });
   final int id;
   final String title;
   final String year;
   final double rating;
+  // final int runtime;
   // final List<String> genres;
   final String overview;
   final String imageUrl;

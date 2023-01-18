@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:movieapp/providers/movies.dart';
-import 'package:movieapp/widgets/picture.dart';
 import 'package:provider/provider.dart';
 
 class Test extends StatelessWidget {
