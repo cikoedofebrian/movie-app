@@ -19,13 +19,19 @@ class Home extends StatelessWidget {
         backgroundColor: Colors.black,
         centerTitle: true,
         actions: [
+          IconButton(
+            icon: Icon(Icons.check),
+            onPressed: () {
+              // Provider.of<Movies>(context, listen: false).signUp();
+            },
+          ),
           InkWell(
             onTap: () => Navigator.pushNamed(context, '/search'),
             child: Padding(
               padding: EdgeInsets.only(right: 20),
               child: Icon(Icons.search),
             ),
-          )
+          ),
         ],
       ),
       body: FutureBuilder(

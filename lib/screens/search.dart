@@ -8,20 +8,22 @@ class Search extends StatelessWidget {
     return Scaffold(
         backgroundColor: Colors.black,
         body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Text(
+          const Text(
             'Search',
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
           Container(
-            padding: EdgeInsets.all(10),
-            margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+            padding: const EdgeInsets.all(10),
+            margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(40), color: Colors.white),
             child: Row(
               children: [
                 Expanded(
                   child: Container(
-                    margin: EdgeInsets.only(left: 15),
+                    margin: const EdgeInsets.only(left: 15),
                     height: 25,
-                    child: TextField(
+                    child: const TextField(
                       decoration: InputDecoration(
                           suffixIcon: Icon(Icons.search),
                           border: InputBorder.none,
@@ -39,17 +41,15 @@ class Search extends StatelessWidget {
                 // ),
               ],
             ),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(40), color: Colors.white),
             // width: double.infinity,
           ),
           TextButton.icon(
               onPressed: () => Navigator.pop(context),
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back_rounded,
                 color: Colors.grey,
               ),
-              label: Text(
+              label: const Text(
                 'Back to home',
                 style: TextStyle(color: Colors.grey),
               ))

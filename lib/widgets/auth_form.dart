@@ -1,5 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:movieapp/providers/auth.dart';
+
+import 'package:provider/provider.dart';
 
 class AuthForm extends StatefulWidget {
   const AuthForm({super.key});
@@ -22,7 +25,8 @@ class _AuthFormState extends State<AuthForm> {
     // if (valid) {
     //   _formKey.currentState!.save();
     // }
-    Navigator.pushReplacementNamed(context, '/home');
+    Provider.of<Authentication>(context, listen: false).changetoken();
+    // Navigator.pushReplacementNamed(context, '/home');
   }
 
   bool _islogin = true;
@@ -68,12 +72,12 @@ class _AuthFormState extends State<AuthForm> {
                   ),
                   if (!_islogin)
                     TextFormField(
-                      key: const ValueKey('Username'),
+                      key: const ValueKey('Password'),
                       onSaved: (newValue) {
                         _username = newValue!;
                       },
                       decoration: const InputDecoration(
-                        label: Text('Username'),
+                        label: Text('Password'),
                       ),
                       validator: (value) {
                         if (value!.length < 4) {
@@ -82,22 +86,22 @@ class _AuthFormState extends State<AuthForm> {
                         return null;
                       },
                     ),
-                  TextFormField(
-                    key: const ValueKey('password'),
-                    onSaved: (newValue) {
-                      _password = newValue!;
-                    },
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      label: Text('Password'),
-                    ),
-                    validator: (value) {
-                      if (value!.length < 4) {
-                        return "A password has minimum length of 7";
-                      }
-                      return null;
-                    },
-                  ),
+                  // TextFormField(
+                  //   key: const ValueKey('password'),
+                  //   onSaved: (newValue) {
+                  //     _password = newValue!;
+                  //   },
+                  //   obscureText: true,
+                  //   decoration: const InputDecoration(
+                  //     label: Text('Password'),
+                  //   ),
+                  //   validator: (value) {
+                  //     if (value!.length < 4) {
+                  //       return "A password has minimum length of 7";
+                  //     }
+                  //     return null;
+                  //   },
+                  // ),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
