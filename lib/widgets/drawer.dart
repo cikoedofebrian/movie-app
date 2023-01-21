@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:movieapp/providers/auth.dart';
 import 'dart:math';
 
 import 'package:movieapp/screens/auth.dart';
+import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -54,6 +56,7 @@ class CustomDrawer extends StatelessWidget {
           // ListTile(
           InkWell(
             onTap: () {
+              Provider.of<Authentication>(context, listen: false).logOut();
               Navigator.pop(context);
             },
             child: SizedBox(

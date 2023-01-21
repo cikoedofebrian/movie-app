@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:movieapp/providers/auth.dart';
 
@@ -12,28 +13,31 @@ class AuthForm extends StatefulWidget {
 }
 
 class _AuthFormState extends State<AuthForm> {
-  void _onSubmit() {
-    // final valid = _formKey.currentState!.validate();
-    // FocusScope.of(context).unfocus();
-    // if (_image == null && !_islogin) {
-    //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-    //     content: Text('Photo cant be empty'),
-    //     backgroundColor: Colors.white,
-    //   ));
-    //   return;
-    // }
-    // if (valid) {
-    //   _formKey.currentState!.save();
-    // }
-    Provider.of<Authentication>(context, listen: false).changetoken();
-    // Navigator.pushReplacementNamed(context, '/home');
+  void _onSubmit(BuildContext ctx) {
+    final valid = _formKey.currentState!.validate();
+    FocusScope.of(context).unfocus();
+    if (valid) {
+      _formKey.currentState!.save();
+    }
+
+    if (!_islogin) {
+      if (_password1 != _password2) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Passwords must match'),
+          backgroundColor: Colors.white,
+        ));
+        return;
+      }
+    }
+
+    Provider.of<Authentication>(context, listen: false)
+        .signUp(_email, _password1, _islogin);
   }
 
   bool _islogin = true;
-  String _username = '';
-  String _password = '';
+  String _password2 = '';
+  String _password1 = '';
   String _email = '';
-  File? _image;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -72,36 +76,36 @@ class _AuthFormState extends State<AuthForm> {
                   ),
                   if (!_islogin)
                     TextFormField(
-                      key: const ValueKey('Password'),
+                      key: const ValueKey('Verify Password'),
                       onSaved: (newValue) {
-                        _username = newValue!;
+                        _password1 = newValue!;
                       },
                       decoration: const InputDecoration(
-                        label: Text('Password'),
+                        label: Text('Verify Password'),
                       ),
                       validator: (value) {
                         if (value!.length < 4) {
-                          return "A username has minimum length of 4";
+                          return "A password has minimum length of 7";
                         }
                         return null;
                       },
                     ),
-                  // TextFormField(
-                  //   key: const ValueKey('password'),
-                  //   onSaved: (newValue) {
-                  //     _password = newValue!;
-                  //   },
-                  //   obscureText: true,
-                  //   decoration: const InputDecoration(
-                  //     label: Text('Password'),
-                  //   ),
-                  //   validator: (value) {
-                  //     if (value!.length < 4) {
-                  //       return "A password has minimum length of 7";
-                  //     }
-                  //     return null;
-                  //   },
-                  // ),
+                  TextFormField(
+                    key: const ValueKey('password'),
+                    onSaved: (newValue) {
+                      _password2 = newValue!;
+                    },
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      label: Text('Password'),
+                    ),
+                    validator: (value) {
+                      if (value!.length < 4) {
+                        return "A password has minimum length of 7";
+                      }
+                      return null;
+                    },
+                  ),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -124,7 +128,7 @@ class _AuthFormState extends State<AuthForm> {
                             backgroundColor:
                                 MaterialStateProperty.all<Color>(Colors.black)),
                         onPressed: () {
-                          _onSubmit();
+                          _onSubmit(context);
                         },
                         child: _islogin == true
                             ? const Text('Login')

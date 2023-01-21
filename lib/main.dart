@@ -11,8 +11,8 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        Provider<Movies>(create: (context) => Movies()),
-        Provider<Authentication>(create: (context) => Authentication()),
+        ChangeNotifierProvider(create: ((context) => Authentication())),
+        ChangeNotifierProvider(create: (((context) => Movies())))
       ],
       child: const MyApp(),
     ),
