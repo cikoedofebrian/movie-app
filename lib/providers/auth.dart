@@ -1,8 +1,7 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Authentication extends ChangeNotifier {
   String? _token;
@@ -40,19 +39,49 @@ class Authentication extends ChangeNotifier {
       var request = await http.post(url, body: accountData);
       var response = json.decode(request.body);
       if (response['error'] != null) {
-        throw (Exception(response['error']['message']));
+        throw (Exception(response['error']['message'].toString()));
       }
       _token = response['idToken'];
       _userId = response['localId'];
+
+      Future<SharedPreferences> prefs = SharedPreferences.getInstance();
+      final userData = json.encode(
+        {
+          'token': _token,
+          'userId': _userId,
+        },
+      );
+      prefs.then((value) {
+        value.setString('userData', userData);
+      });
       notifyListeners();
     } catch (error) {
       rethrow;
     }
   }
 
+  Future<bool> autoLogin() async {
+    Future<SharedPreferences> prefs = SharedPreferences.getInstance();
+    prefs.then((prefs) {
+      if (!prefs.containsKey('userData')) {
+        return false;
+      }
+      final extractedUserData =
+          json.decode(prefs.getString('userData')!) as Map<String, dynamic>;
+      _token = extractedUserData['token'] as String;
+      _userId = extractedUserData['userId'] as String;
+      notifyListeners();
+    });
+    return true;
+  }
+
   void logOut() {
     _userId = null;
     _token = null;
     notifyListeners();
+    Future<SharedPreferences> prefs = SharedPreferences.getInstance();
+    prefs.then((value) {
+      value.clear();
+    });
   }
 }

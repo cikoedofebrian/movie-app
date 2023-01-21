@@ -74,26 +74,10 @@ class _AuthFormState extends State<AuthForm> {
                       label: Text('Email'),
                     ),
                   ),
-                  if (!_islogin)
-                    TextFormField(
-                      key: const ValueKey('Verify Password'),
-                      onSaved: (newValue) {
-                        _password1 = newValue!;
-                      },
-                      decoration: const InputDecoration(
-                        label: Text('Verify Password'),
-                      ),
-                      validator: (value) {
-                        if (value!.length < 4) {
-                          return "A password has minimum length of 7";
-                        }
-                        return null;
-                      },
-                    ),
                   TextFormField(
                     key: const ValueKey('password'),
                     onSaved: (newValue) {
-                      _password2 = newValue!;
+                      _password1 = newValue!;
                     },
                     obscureText: true,
                     decoration: const InputDecoration(
@@ -106,6 +90,22 @@ class _AuthFormState extends State<AuthForm> {
                       return null;
                     },
                   ),
+                  if (!_islogin)
+                    TextFormField(
+                      key: const ValueKey('Verify Password'),
+                      onSaved: (newValue) {
+                        _password2 = newValue!;
+                      },
+                      decoration: const InputDecoration(
+                        label: Text('Verify Password'),
+                      ),
+                      validator: (value) {
+                        if (value!.length < 4) {
+                          return "A password has minimum length of 7";
+                        }
+                        return null;
+                      },
+                    ),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,

@@ -32,7 +32,16 @@ class MyApp extends StatelessWidget {
           fontFamily: GoogleFonts.montserrat().fontFamily,
           primarySwatch: Colors.blue,
         ),
-        home: value.isAuth ? Home() : Auth(),
+        home: value.isAuth
+            ? Home()
+            : FutureBuilder(
+                builder: (context, snapshot) => snapshot.connectionState ==
+                        ConnectionState.waiting
+                    ? Scaffold(body: Center(child: CircularProgressIndicator()))
+                    : Auth(),
+                future: Provider.of<Authentication>(context, listen: false)
+                    .autoLogin(),
+              ),
         routes: {
           '/home': (context) => const Home(),
           '/search': (context) => const Search()
